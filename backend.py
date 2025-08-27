@@ -2,6 +2,7 @@ import csv
 import numpy as np
 import os
 import threading
+import pandas as pd
 
 file_lock = threading.Lock()
 
@@ -25,3 +26,12 @@ def add_expense(date,name,quantity,price):
             f.flush()
             os.fsync(f.fileno())
         print("Details added")
+
+def show_expense():
+    start_date = input("Enter the start date: ")
+    end_date = input("Enter the end date: ")
+    df = pd.read_csv("D:/Python Projects/Personal Expense Tracker/expense_tracker.csv")
+    df['Date'] = pd.to_datetime(df['Date'])
+    a = df[(df['Date']>=start_date) & (df['Date']<=end_date)]
+    print(a)
+
